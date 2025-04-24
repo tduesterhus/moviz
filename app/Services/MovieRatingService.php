@@ -31,7 +31,7 @@ class MovieRatingService
             ]);
         }
 
-        // ... and update the data (implicit update)
+        // ... and update the source data (implicit update)
         $movieDetails = $this->omdbQuery->movieById($extMovieId->toString());
         $movie->sources()->updateOrCreate(
             ['source_id' => $movieDetails->movieId->toString()],

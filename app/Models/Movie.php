@@ -3,11 +3,14 @@
 namespace App\Models;
 
 use App\Objects\MovieType;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Movie extends Model
 {
+    use HasFactory;
+
     protected $guarded = ['id', 'uuid'];
 
     protected function casts(): array

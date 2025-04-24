@@ -41,7 +41,6 @@ expect()->extend('toBeOne', function () {
 |
 */
 
-function something()
-{
-    // ..
+function loadJsonFixture(string $fixturePath): array {
+    return json_decode(file_get_contents(base_path(sprintf('tests/Fixtures/%s', $fixturePath))), true);
 }
