@@ -16,11 +16,12 @@ return new class extends Migration
             $table->foreignIdFor(\App\Models\Movie::class)->index();
             $table->string('source')->index();
             $table->string('source_id')->index();
-            $table->string('title');//->fulltext();
+            $table->string('title')->fulltext();
             $table->string('year');
             $table->string('image_url');
             $table->string('type');
             $table->timestamps();
+            $table->unique(['source', 'source_id']);
         });
     }
 

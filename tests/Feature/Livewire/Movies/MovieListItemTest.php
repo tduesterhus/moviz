@@ -9,7 +9,7 @@ it('renders successfully', function () {
                               ->create(['avg_rating' => 2]);
 
     $movieShort = \App\Objects\MovieShort::fromSource($movie->sources->firstOrFail());
-    Livewire::test(MovieListItem::class, ['movie' => new \App\Objects\MovieListItem($movie->avg_rating, $movieShort)])
+    Livewire::test(MovieListItem::class, ['movie' => new \App\Objects\MovieRatedShort($movie->avg_rating, $movieShort)])
             ->assertStatus(200)
             ->assertSee($movieShort->title)
             ->assertSee($movieShort->year)

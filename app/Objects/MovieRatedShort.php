@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App\Objects;
 
-class MovieListItem
+class MovieRatedShort
 {
     public function __construct(
         public readonly ?string $avgRating,

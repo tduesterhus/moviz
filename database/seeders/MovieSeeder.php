@@ -2,17 +2,17 @@
 
 namespace Database\Seeders;
 
+use App\APIs\OMDbAPI;
 use App\Models\User;
+use App\Objects\ExtMovieId;
 use App\Objects\FiveStarRating;
-use App\Objects\IMDbIdExt;
-use App\Queries\OMDbAPIQuery;
 use App\Services\MovieRatingService;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
 class MovieSeeder extends Seeder
 {
-    public function __construct(private readonly OMDbAPIQuery $query, private readonly MovieRatingService $rateService)
+    public function __construct(private readonly MovieRatingService $rateService)
     {
 
     }
@@ -43,7 +43,7 @@ class MovieSeeder extends Seeder
 
         foreach(User::all() as $user) {
             foreach($extIds as $extId) {
-                $this->rateService->rate(new IMDbIdExt($extId), $user->id, new FiveStarRating(random_int(1,5)));
+                $this->rateService->rate(new ExtMovieId($extId), $user->id, new FiveStarRating(random_int(1,5)));
             }
         }
     }

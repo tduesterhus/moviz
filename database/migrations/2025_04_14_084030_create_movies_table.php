@@ -15,7 +15,7 @@ return new class extends Migration
         Schema::create('movies', function (Blueprint $table) {
             $table->id();
             $table->uuid()->default(DB::raw('UUID()'))->index();
-            $table->decimal('avg_rating', 8, 2)->default(0);
+            $table->decimal('avg_rating', 3, 2)->default(0);
             $table->timestamps();
         });
     }

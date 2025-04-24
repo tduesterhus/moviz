@@ -8,7 +8,7 @@ use App\APIs\OMDbAPI;
 use App\DTOs\MovieDetailsDTO;
 use App\Models\Movie;
 use App\Models\MovieRating;
-use App\Objects\MovieListItem;
+use App\Objects\MovieRatedShort;
 use App\Objects\MovieShort;
 use App\Objects\MovieSourceType;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -31,7 +31,7 @@ class MovieQuery
         $extIds = collect($movies->data)->map(fn(MovieShort $movie) => $movie->extId->toString());
         $ratings = $this->getRatingsByExtId($extIds, MovieSourceType::OMDb);
         $data = collect($movies->data)->map(
-            fn(MovieShort $movie) => new MovieListItem($ratings->get($movie->extId->toString()), $movie)
+            fn(MovieShort $movie) => new MovieRatedShort($ratings->get($movie->extId->toString()), $movie)
         );
         return new LengthAwarePaginator($data, $movies->total, 10, $page);
     }
@@ -50,20 +50,22 @@ class MovieQuery
         string $titleSearch,
         MovieSourceType $sourceType = MovieSourceType::OMDb
     ): LengthAwarePaginator {
+        $searchPattern = implode(' ', array_map(fn ($value) => $value . '*', explode(' ', $titleSearch)));
         $movies = Movie::query()
                        ->withAvg('ratings as ratings_avg', 'rating')
-                       ->with('sources', fn($builder) => $builder->where('source', $sourceType->value))
                        ->when(
                            !empty($titleSearch),
                            fn($builder) => $builder->withWhereHas(
                                'sources',
-                               fn($query) => $query->whereLike('title', "%$titleSearch%")
+                               fn($query) => $query
+                                   ->whereRaw('MATCH (title) AGAINST (? IN BOOLEAN MODE)', [$searchPattern])
+                                   ->where('source', $sourceType->value)
                            )
                        )
                        ->paginate(20);
         $movies->setCollection(
             $movies->map(
-                fn(Movie $movie) => new MovieListItem(
+                fn(Movie $movie) => new MovieRatedShort(
                     $movie->ratings_avg,
                     MovieShort::fromSource($movie->sources()->first())
                 )

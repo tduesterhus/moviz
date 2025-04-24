@@ -16,7 +16,7 @@ class MovieListItem extends Component
     public $type;
     public $avg_rating;
 
-    public function mount(\App\Objects\MovieListItem $movie)
+    public function mount(\App\Objects\MovieRatedShort $movie)
     {
         $this->extId = $movie->movieShort->extId->toString();
         $this->title = $movie->movieShort->title;

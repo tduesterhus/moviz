@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignIdFor(\App\Models\Movie::class)->index();
             $table->tinyInteger('rating');
             $table->timestamps();
+            $table->unique(['user_id', 'movie_id']);
         });
     }
 
