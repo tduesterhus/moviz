@@ -38,7 +38,7 @@
         <flux:separator class="my-4"/>
         <form wire:submit="rateMovie">
             <div class="flex flex-col gap-2">
-                <flux:select class="max-w-16" label="{{__('Your rating')}}" wire:model="rating"
+                <flux:select class="max-w-16" label="{{__('Your rating')}}" wire:model="userRating"
                              placeholder="reach for the stars...">
                     <flux:select.option value="1">0</flux:select.option>
                     <flux:select.option value="1">1</flux:select.option>

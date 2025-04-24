@@ -34,7 +34,7 @@ it('renders successfully', function () {
     $livewireTest->assertSee($movieDetails['Year']);
     $livewireTest->assertSee($movieDetails['Type']);
 
-    $livewireTest->set('rating', 5);
+    $livewireTest->set('userRating', 5);
     $livewireTest->call('rateMovie');
 
     \PHPUnit\Framework\assertTrue(

@@ -5,7 +5,7 @@ namespace App\Objects;
 
 use Carbon\CarbonImmutable;
 
-class ExtMovieDetails
+class MovieDetails
 {
     public function __construct(
         public readonly MovieSourceType $source,

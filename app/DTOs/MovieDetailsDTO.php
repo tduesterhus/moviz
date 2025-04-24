@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace App\DTOs;
 
 use App\Models\Movie;
-use App\Objects\ExtMovieDetails;
+use App\Objects\MovieDetails;
 use Livewire\Wireable;
 
-class MovieDetails implements Wireable
+class MovieDetailsDTO implements Wireable
 {
     public function __construct(
         public readonly ?string $movieUuid,
@@ -33,7 +33,7 @@ class MovieDetails implements Wireable
     ) {
     }
 
-    public static function fromExtDetails(?Movie $movie, ExtMovieDetails $details): self
+    public static function fromExtDetails(?Movie $movie, MovieDetails $details): self
     {
         return new self(
             movieUuid: $movie?->uuid,

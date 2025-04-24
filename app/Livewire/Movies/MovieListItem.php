@@ -2,7 +2,6 @@
 
 namespace App\Livewire\Movies;
 
-use App\Objects\MovieSourceType;
 use App\Queries\MovieQuery;
 use Livewire\Attributes\On;
 use Livewire\Component;
@@ -30,7 +29,7 @@ class MovieListItem extends Component
     #[On('movie-rated.{extId}')]
     public function updateRating(MovieQuery $movieQuery)
     {
-        $this->avg_rating = (float)$movieQuery->getMovieByExtId($this->extId, MovieSourceType::OMDb)?->avg_rating;
+        $this->avg_rating = $movieQuery->getAvgRatingByExtId($this->extId);
     }
 
     public function render()

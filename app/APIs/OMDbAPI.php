@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\APIs;
 
 use App\Exceptions\OMDbAPIException;
-use App\Objects\ExtMovieDetails;
+use App\Objects\MovieDetails;
 use App\Objects\ExtMovieId;
 use App\Objects\MovieShort;
 use App\Objects\MovieShortList;
@@ -48,7 +48,7 @@ class OMDbAPI
         return new MovieShortList($data->all(), MovieSourceType::OMDb, (int)$response['totalResults'] ?? 0, $page);
     }
 
-    public function movieById(string $omdbId): ?ExtMovieDetails
+    public function movieById(string $omdbId): ?MovieDetails
     {
         $options = [
             'i'    => $omdbId,
@@ -61,7 +61,7 @@ class OMDbAPI
                 $releaseDate = CarbonImmutable::parse($response['Released']);
             } catch (InvalidFormatException $exception) {
             }
-            return new ExtMovieDetails(
+            return new MovieDetails(
                 source: MovieSourceType::OMDb,
                 movieId: new ExtMovieId($response['imdbID']),
                 title: $response['Title'],
