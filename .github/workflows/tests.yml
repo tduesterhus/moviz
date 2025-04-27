@@ -19,7 +19,7 @@ jobs:
       db:
         image: mariadb:10.11
         ports:
-          - 3306
+          - 3306:3306
         env:
           MYSQL_USER: db
           MYSQL_PASSWORD: db
