@@ -15,6 +15,17 @@ jobs:
     runs-on: ubuntu-latest
     environment: Testing
 
+    services:
+      db:
+        image: mariadb:10.11
+        ports:
+          - 3306
+        env:
+          MYSQL_USER: db
+          MYSQL_PASSWORD: db
+          MYSQL_DATABASE: db
+          MYSQL_ROOT_PASSWORD: db
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -51,4 +62,4 @@ jobs:
         run: npm run build
 
       - name: Run Tests
-        run: ./vendor/bin/pest
+        run: php artisan test
